@@ -1,6 +1,6 @@
 import { jsonToArr, write } from "../read.js"
 
-export { read, selectById, createUser }
+export { read, selectById, createUser, updateUser }
 
 const read = async (req, res) => {
     try {
@@ -29,6 +29,22 @@ const createUser = async (req, res) => {
         await write(data)
         const newReadData = await jsonToArr()
         res.send(newReadData)
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+const updateUser = async (req, res) => {
+    try {
+        const id = req.params.id
+        const data = await jsonToArr()
+        data.forEach(user => {
+            if (user.id === Number(id)) {
+                user.name = req.body.name
+            }
+        })
+        await write(data)
+        res.send(await jsonToArr())
     } catch (error) {
         res.send(error)
     }
