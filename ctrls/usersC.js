@@ -21,11 +21,9 @@ const selectById = async (req, res) => {
     }
 };
 
-//    createUser יש שגיאה וצריך לעבור על 
 const createUser = async (req, res) => {
     try {
         const data = await jsonToArr()
-        // console.log(data);
         const newUser = { "id": data.length + 1, "name": req.body.name }
         data.push(newUser)
         await write(data)
